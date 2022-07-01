@@ -32,6 +32,14 @@ async function run() {
             res.send(allTask);
         });
 
+        // Get single task
+        app.get('/users/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const singleTask = await userCollection.findOne(query);
+            res.send(singleTask);
+        });
+
         // Delete single task
         app.delete('/users/:id', async (req, res) => {
             const id = req.params.id;
