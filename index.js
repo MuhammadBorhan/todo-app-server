@@ -40,6 +40,22 @@ async function run() {
             res.send(singleTask);
         });
 
+        // Update task
+        app.put('/users/:id', async (req, res) => {
+            const id = req.params.id;
+            const data = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    name: data.name,
+                    description: data.description
+                }
+            };
+            const result = await userCollection.updateOne(filter, updatedDoc, options);
+            res.send(result);
+        })
+
         // Delete single task
         app.delete('/users/:id', async (req, res) => {
             const id = req.params.id;
